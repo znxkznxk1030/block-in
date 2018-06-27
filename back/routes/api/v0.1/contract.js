@@ -1,5 +1,5 @@
 import express from 'express';
-import {ContractManager, contractInstances} from '../../../Contract/contract.manager';
+import {ContractManager} from '../../../Contract/contract.manager';
 
 const router = express.Router();
 
@@ -18,7 +18,8 @@ const contractBlockin = new ContractManager(option);
 })();
 
 router.get('/block-in', (req, res) => {
-    const metadata = contractBlockin.getContractMetadata();
+    const blockin = new ContractManager({name: req.query.name});
+    const metadata = blockin.getContractMetadata();
 
     if (!!metadata) {
         return res.status(200).json({
