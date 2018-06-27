@@ -2,7 +2,7 @@ import {web3Provider as web3} from '../util/util';
 
 let eth_accounts = null;
 
-export const getOwnerAccount = (owner) => {
+export const getOwnerAccountByIndex = (owner) => {
     return new Promise((resolve, reject) => {
         if (!!!eth_accounts) {
             web3.eth.getAccounts()
