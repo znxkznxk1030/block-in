@@ -1,4 +1,7 @@
-import {ContractManager, contractInstances} from './Contract/contract.manager'
+import express from 'express';
+import http from 'http';
+import bodyParser from 'body-parser';
+import {ContractManager, contractInstances} from './Contract/contract.manager';
 
 let option = {
     owner: 1,
@@ -16,3 +19,19 @@ let option = {
     console.log(contractInstance.options.address);
 
 })();
+
+let app = express();
+
+app.use(bodyParser.json());
+
+// TODO: app.set(%front files%)
+
+/**
+ * allow cros
+ */
+app.all('/*', (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access=Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
