@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean:back": "rm -rf ./dist/back",
-    "clean:front": "rm -rf ./dist/front",
+    "clean:back": "rm -rf ./dist/back ./dist/common",
+    "clean:front": "rm -rf ./dist/front ./dist/common",
     "clean": "npm run clean:back && npm run clean:front",
-    "build-back": "npm run clean:back && babel ./back --out-dir ./dist/back --ignore ./node_modules",
+    "build-back": "npm run clean:back && babel ./back ./common --out-dir ./dist/back --ignore ./node_modules",
     "build-front": "npm run clean:front",
-    "build": "npm run clean && babel ./back --out-dir ./dist/back --ignore ./node_modules",
-    "start": "npm run build && babel-node ./dist/index.js"
+    "build": "npm run clean && babel ./back ./common --out-dir ./dist/back --ignore ./node_modules",
+    "start": "npm run build && babel-node ./dist/back/index.js"
   },
   "keywords": [],
   "author": "",
