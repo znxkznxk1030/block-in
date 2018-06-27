@@ -27,6 +27,7 @@ export class ContractManager {
 
         this.abi = null;
         this.bytecode = null;
+        this.address = null;
     }
 
     setContractOwner(owner) {
@@ -89,22 +90,22 @@ export class ContractManager {
             })
             .then((contractInstance) => {
                 contractInstances[this.name] = contractInstance;
+                this.address = contractInstance.options.address;
                 resolve(contractInstance);
             });
         });
     }
 
-    getContractInstance () {
-        if (contractInstances[this.name]) {
-            return contractInstances[this.name];
+    getContractMetadata () {
+        const instance = contractInstances[this.name];
+        if (!!contractInstances[this.name]) {
+            return {
+                address: this.address,
+                abi: this.abi
+            };
         } else {
             console.error(`-----\tCannot found a ${this.name} contract instance\t-----`);
             return null;
         }
     }
-
-    setContractInstance (contractInstance) {
-        contractInstances[this.name] = contractInstance;
-    }
-
 }
