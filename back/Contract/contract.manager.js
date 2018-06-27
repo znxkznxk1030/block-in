@@ -22,6 +22,10 @@ export class ContractManager {
         if (!!instances[ContractOption.name]) {
             return instances[ContractOption.name];
         }
+
+        if(!!!ContractOption.owner) {
+            return null;
+        }
         
         this.owner = ContractOption.owner;
         this.gas = ContractOption.gas;
