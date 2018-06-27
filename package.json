@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel ./src --out-dir ./dist --ignore ./node_modules",
+    "clean:back": "rm -rf ./dist/back",
+    "clean:front": "rm -rf ./dist/front",
+    "clean": "npm run clean:back && npm run clean:front",
+    "build-back": "npm run clean:back && babel ./back --out-dir ./dist/back --ignore ./node_modules",
+    "build-front": "npm run clean:front",
+    "build": "npm run clean && babel ./back --out-dir ./dist/back --ignore ./node_modules",
     "start": "npm run build && babel-node ./dist/index.js"
   },
   "keywords": [],
