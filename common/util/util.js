@@ -11,5 +11,10 @@ export const web3Provider = function() {
         web3 = new Web3(new Web3.providers.HttpProvider(URL_WEB3_PROVIDER));
     }
 
+    // TODO return null when web3 provider is not given
+    // if (!!!web3.givenProvider) {
+    //     return null;
+    // }
+
     return web3;
 }();
