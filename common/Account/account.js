@@ -23,6 +23,9 @@ export const getAccounts = () => {
             .then(accounts => {
                 eth_accounts = accounts;
                 resolve(eth_accounts);
+            })
+            .catch((error) => {
+                reject(error);
             });
         } else {
             resolve(eth_accounts);
@@ -36,6 +39,32 @@ export const loadAccounts = () => {
         .then(accounts => {
             eth_accounts = accounts;
             resolve(eth_accounts);
+        })
+        .catch((error) => {
+            reject(error);
         });
     });
 };
+
+export const createAccount = (password) => {
+    return new Promise((resolve, reject) => {
+        if (!!!password) {
+            reject('password is empty');
+        }
+
+        web3.eth.personal.newAccount(password)
+        .then((newAccount) => {
+            console.log(newAccount);
+            loadAccounts()
+            .then((accounts) => {
+                resolve(accounts);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+        })
+        .catch((error) => {
+            reject(error);
+        });
+    });
+}

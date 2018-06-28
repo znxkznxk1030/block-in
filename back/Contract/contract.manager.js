@@ -67,6 +67,10 @@ export class ContractManager {
 
     deploy () {
         return new Promise(async (resolve, reject) => {
+            if(!!!web3) {
+                reject(`-----\tCannot deploy ${this.name}\t-----`);
+            }
+
             if (!!!this.abi || !!!this.bytecode){
                 console.error(`-----\tCannot find compiled Contract\t-----`);
                 console.error(`-----\tNow compiling Contract File (NAME : ${this.name})\t-----`);

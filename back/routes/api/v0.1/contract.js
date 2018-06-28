@@ -1,5 +1,6 @@
 import express from 'express';
 import {ContractManager} from '../../../Contract/contract.manager';
+import {web3Provider as web3} from '../../../util/util';
 
 const router = express.Router();
 
@@ -12,8 +13,16 @@ let option = {
 };
 
 (async function () {
+    if (!!!web3) {
+        console.error(`-----\tweb3 is not provied\t-----\n-----\tPlease, check testRPC or geth status\t-----`);
+        return;
+    }
+
     const contractBlockin = new ContractManager(option);
-    await contractBlockin.deploy();
+    await contractBlockin.deploy()
+    .catch((error) => {
+        console.error(error);
+    });
 })();
 
 router.get('/block-in', (req, res) => {

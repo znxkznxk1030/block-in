@@ -22,6 +22,6 @@ app.all('/*', (req, res, next) => {
 
 app.use('/block-in/api/v0.1', index);
 
-let server = http.createServer(app).listen(3000, function () {
-    console.log('server running port : ' + 3000);
+let server = http.createServer(app).listen(1356, function () {
+    console.log('server running port : ' + 1356);
 });
