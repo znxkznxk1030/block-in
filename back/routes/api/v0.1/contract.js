@@ -11,9 +11,8 @@ let option = {
     name: 'RSPBattle'
 };
 
-const contractBlockin = new ContractManager(option);
-
 (async function () {
+    const contractBlockin = new ContractManager(option);
     await contractBlockin.deploy();
 })();
 
@@ -34,7 +33,6 @@ router.get('/block-in', (req, res) => {
             Please, request this api again few seconds later.`
         });
     }
-
 });
 
 module.exports = router;

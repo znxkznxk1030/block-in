@@ -10,34 +10,27 @@ export let instances = {};
 
 export class ContractManager {
     /**
-    *  @param {Object} ContractOption options for creating and deploying new contracts
-    *  @param {string} ContractOption.owner a eth Account who creates new contracts
-    *  @param {Number} ContractOption.gas a gas 
-    *  @param {Number} ContractOption.price gas prices for each etherium 
-    *  @param {Object} ContractOption.contract a contract
-    *  @param {string} ContractOption.contract.filename a solidity file(.sol) path
-    *  @param {string} ContractOption.contract.name a contract name
+    *  @param {Object} option options for creating and deploying new contracts
+    *  @param {string} option.owner a eth Account who creates new contracts
+    *  @param {Number} option.gas a gas 
+    *  @param {Number} option.price gas prices for each etherium 
+    *  @param {string} option.filename a solidity file(.sol) path
+    *  @param {string} option.name a contract name
     */
-    constructor(ContractOption) {
-        if (!!instances[ContractOption.name]) {
-            return instances[ContractOption.name];
+    constructor(option) {
+        if (!!instances[option.name]) {
+            return instances[option.name];
         }
 
-        if(!!!ContractOption.owner) {
-            return null;
-        }
-        
-        this.owner = ContractOption.owner;
-        this.gas = ContractOption.gas;
-        this.price = ContractOption.price;
-        this.filename = ContractOption.filename;
-        this.name = ContractOption.name;
+        this.owner = option.owner;
+        this.gas = option.gas;
+        this.price = option.price;
+        this.filename = option.filename;
+        this.name = option.name;
 
         this.abi = null;
         this.bytecode = null;
         this.address = null;
-
-        instances[ContractOption.name] = this;
     }
 
     setContractOwner(owner) {
@@ -100,7 +93,11 @@ export class ContractManager {
             })
             .then((contractInstance) => {
                 this.address = contractInstance.options.address;
-                resolve(contractInstance);
+                instances[this.name] = this;
+                resolve({
+                    address: this.address,
+                    abi: this.abi
+                });
             });
         });
     }
