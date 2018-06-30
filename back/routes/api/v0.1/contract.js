@@ -8,8 +8,8 @@ let option = {
     owner: 1,
     gas: 4712388,
     price: 100000000000,
-    filename: 'test',
-    name: 'RSPBattle'
+    filename: 'hdac',
+    name: 'hdac'
 };
 
 (async function () {
