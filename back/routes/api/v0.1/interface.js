@@ -5,15 +5,13 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     const blockin = new ContractManager({name: req.query.name});
-    const param = req.query.param;
-    const method = req.query.method;
     const contractInstance = blockin.getContractInstance();
 
     console.log(contractInstance.methods);
 
     if (!!contractInstance) {
         return res.status(200).json({
-            methods: contractInstance.methods,
+            'methods': Object.keys(contractInstance.methods),
             'code': 200
         });
     } else {
