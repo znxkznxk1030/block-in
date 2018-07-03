@@ -7,6 +7,21 @@ import {getOwnerAccountByIndex} from '../Account/account';
 import {web3Provider as web3} from '../util/util';
 
 export let instances = {};
+const CONTARCT_DIR = path.resolve(__dirname, '../../../solidity');
+
+let findContract = (pathname) => {
+    const contractPath = path.resolve(CONTARCT_DIR, pathname);
+    console.log(contractPath);
+    if (isContract(contractPath)) {
+        return fs.readFileSync(contractPath, 'utf8');
+    } else {
+        throw new Error(`File ${contractPath} not found`);
+    }
+};
+
+let isContract = (pathname) =>  {
+    return fs.existsSync(pathname);
+};
 
 export class ContractManager {
     /**
@@ -44,10 +59,22 @@ export class ContractManager {
             return false;
         }
 
-        const pathContract = `solidity/${this.filename}.sol`;
-        let code = fs.readFileSync(pathContract).toString();
-        let compiled = solc.compile(code, 1);
-        compiled = !!this.name? compiled.contracts[`:${this.name}`]: compiled.contracts;
+        const pathContract = path.resolve(CONTARCT_DIR, `${this.filename}.sol`);
+        let input = {};
+        let code = fs.readFileSync(pathContract, 'utf8');
+        input[`${this.filename}.sol`] = code;
+        // input[`test`] = fs.readFileSync(path.resolve(CONTARCT_DIR, `test.sol`), 'utf8');
+        // console.log(input);
+        let compiled = solc.compile({ sources: input }, 1, this.findImports);
+
+        console.log(compiled);
+
+        // for (var contractName in compiled.contracts)
+        //     console.log(contractName + ': ' + compiled.contracts[contractName].bytecode);
+
+        compiled = !!this.name? compiled.contracts[`${this.filename}.sol:${this.name}`]: compiled.contracts;
+
+        console.log(compiled);
 
         if (!!!compiled){
             console.error(`-----\tFailed to Compile Solidity file (PATH : ${pathContract})\t-----`);
@@ -63,6 +90,14 @@ export class ContractManager {
         this.bytecode = compiled.bytecode;
         console.log(`-----\tSuccess to Compile Contract File (NAME: ${this.name})\t-----`);
         return true;
+    }
+
+    findImports(pathname) {
+        try {
+            return { contents: findContract(pathname) };
+        } catch(e) {
+            return { error: e.message };
+        }
     }
 
     deploy () {

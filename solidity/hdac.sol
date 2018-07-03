@@ -2,9 +2,12 @@
 /// Made by Team Block In
 /// Ver 1.4
 pragma solidity ^0.4.0;
-contract hdac{
+
+import "./test.sol";
+
+contract hdac {
     
-   struct IoTnet{
+   struct IoTnet {
        address Admin;
        address[] PermittedUser;
        address[] PermittedDevice;
@@ -12,7 +15,7 @@ contract hdac{
        uint numPermittedUser;
    }
    
-   struct Device{
+   struct Device {
        address DeviceAddress;
        bool State;
        string Name;
@@ -24,7 +27,7 @@ contract hdac{
        uint HomeIndex;
    }
    
-   struct Home{
+   struct Home {
        address HomeOwner;
        IoTnet HomeNet;
        uint Index;
@@ -35,7 +38,7 @@ contract hdac{
        uint UsageTime;
    }
    
-   struct Customer{
+   struct Customer {
        address CustomerAddress;
        uint Deposit;
        uint TotalPrice;
@@ -48,11 +51,11 @@ contract hdac{
    uint public Balance;
    address ContractOwner;
 
-   function Constuctor() public {
-   numHomes = 1;
-   Balance = 0;
-   ContractOwner = msg.sender;
-   }
+    function Constuctor() public {
+        numHomes = 1;
+        Balance = 0;
+        ContractOwner = msg.sender;
+    }
    
    function () payable public {
        customers[msg.sender] = Customer(msg.sender,msg.value,0);
