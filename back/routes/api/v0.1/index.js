@@ -1,6 +1,7 @@
 import express from 'express';
 import contract from './contract';
 import account from './account';
+import contractInterface from './interface';
 import {web3Provider as web3} from '../../../util/util';
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.use('/*', (req, res, next) => {
 
 router.use('/contract', contract);
 router.use('/account', account);
+router.use('/interface', contractInterface);
 
 module.exports = router;

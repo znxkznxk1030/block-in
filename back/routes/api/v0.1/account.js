@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAccounts, createAccount} from '../../../Account/account';
+import {getAccounts, createAccoun, getBalance} from '../../../Account/account';
 
 const router = express.Router();
 
@@ -11,6 +11,26 @@ router.get('/', (req, res) => {
             msg: 'Success to load accounts',
             accounts: accounts
         });
+    });
+});
+
+router.get('/getBalance', (req, res) => {
+    const account = req.query.account;
+
+    getBalance(account)
+    .then((balance) => {
+        res.status(200).json({
+            code: 200,
+            msg: 'Success to get Balance',
+            account_address: account,
+            balance: balance
+        });
+    })
+    .catch((error) => {
+        res.status(400).json({
+            code: 400,
+            msg: error
+        })
     });
 });
 

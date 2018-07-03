@@ -28,7 +28,7 @@ URL : http://localhost:3000
 
 ### example api
 ```
-http://localhost:3000/block-in/api/v0.1/contract/block-in?name=RSPBattle
+http://localhost:3000/block-in/api/contract/block-in?name=RSPBattle
 ```
 
 - request query (GET method)

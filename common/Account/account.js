@@ -67,4 +67,20 @@ export const createAccount = (password) => {
             reject(error);
         });
     });
-}
+};
+
+export const getBalance = (account) => {
+    return new Promise((resolve, reject) => {
+        if (!!!account) {
+            reject('account is empty');
+        }
+
+        web3.eth.getBalance(account)
+        .then((balance) => {
+            resolve(balance);
+        })
+        .catch((error) => {
+            reject(error);
+        });
+    });
+};

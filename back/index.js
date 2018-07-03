@@ -20,7 +20,7 @@ app.all('/*', (req, res, next) => {
     next();
 });
 
-app.use('/block-in/api/v0.1', index);
+app.use('/block-in/api', index);
 
 let server = http.createServer(app).listen(1356, function () {
     console.log('server running port : ' + 1356);

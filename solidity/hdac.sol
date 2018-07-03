@@ -208,7 +208,7 @@ contract hdac {
        homes[_HomeIndex].UsageTime = 0;
    }
    
-   function GetHome(uint _HomeIndex) public constant returns(address _HomeOwner, bool _OnMarket, uint _Price, uint _CheckinTime, uint _CheckoutTime, uint _UsageHour, uint _UsageMinute){
+   function GetHome(uint _HomeIndex) public view returns(address _HomeOwner, bool _OnMarket, uint _Price, uint _CheckinTime, uint _CheckoutTime, uint _UsageHour, uint _UsageMinute){
        _HomeOwner = homes[_HomeIndex].HomeOwner;
        _OnMarket = homes[_HomeIndex].OnMarket;
        _Price = homes[_HomeIndex].Price;

@@ -46,6 +46,7 @@ export class ContractManager {
         this.abi = null;
         this.bytecode = null;
         this.address = null;
+        this.contractInstance = null;
     }
 
     setContractOwner(owner) {
@@ -133,12 +134,17 @@ export class ContractManager {
             .then((contractInstance) => {
                 this.address = contractInstance.options.address;
                 instances[this.name] = this;
+                this.contractInstance = contractInstance;
                 resolve({
                     address: this.address,
                     abi: this.abi
                 });
             });
         });
+    }
+
+    getContractInstance () {
+        return this.contractInstance;
     }
 
     getContractMetadata () {
