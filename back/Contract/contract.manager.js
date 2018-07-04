@@ -37,6 +37,11 @@ export class ContractManager {
             return instances[option.name];
         }
 
+        if (option.isDeployed) {
+            loadContractInstance ();
+            return;
+        }
+
         this.owner = option.owner;
         this.gas = option.gas;
         this.price = option.price;
@@ -155,5 +160,13 @@ export class ContractManager {
             console.error(`-----\tCannot found a ${this.name} contract instance\t-----`);
             return null;
         }
+    }
+
+    loadContractInstance () {
+        this.name = this.name;
+        this.abi = this.abi;
+        this.address = this.address;
+        this.contractInstance = new web3.eth.Contract(this.abi, this.address);
+        instances[this.name] = this;
     }
 }
