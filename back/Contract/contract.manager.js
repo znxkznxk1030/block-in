@@ -64,13 +64,8 @@ export class ContractManager {
         let input = {};
         let code = fs.readFileSync(pathContract, 'utf8');
         input[`${this.filename}.sol`] = code;
-        // input[`test`] = fs.readFileSync(path.resolve(CONTARCT_DIR, `test.sol`), 'utf8');
-        // console.log(input);
+        
         let compiled = solc.compile({ sources: input }, 1, this.findImports);
-
-        // console.log(compiled);
-        // for (var contractName in compiled.contracts)
-        //     console.log(contractName + ': ' + compiled.contracts[contractName].bytecode);
 
         compiled = !!this.name? compiled.contracts[`${this.filename}.sol:${this.name}`]: compiled.contracts;
 
