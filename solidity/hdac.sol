@@ -1,6 +1,6 @@
 /// This is made for hdac Hackerton in 2018.
 /// Made by Team Block In
-/// Ver 1.4
+/// Ver 1.5
 pragma solidity ^0.4.0;
 
 import "./permission.sol";

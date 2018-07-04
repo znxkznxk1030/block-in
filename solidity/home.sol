@@ -4,6 +4,7 @@ import "./iotnet.sol";
 import "./ownable.sol";
 import "./time.sol";
 import "./safemath.sol";
+
 contract home is iotnet, Ownable {
     using Time for uint;
     using SafeMath for uint;
@@ -20,28 +21,34 @@ contract home is iotnet, Ownable {
         uint usageTime;
     }
 
+
+    mapping(address => uint) homelist;
     mapping(uint => Home) homes;
     uint public numHomes;
 
-    function registHome(address _HomeOwner) public {
+    function registHome(address _HomeOwner) public returns(bool) {
         if(msg.sender != contractOwner)
         {
-            return;
+            return false;
         }
         IoTnet memory newIoTnet = IoTnet(0,new address[](0), new address[](0), 0, 0, 0);
         homes[numHomes] = Home(_HomeOwner, newIoTnet, numHomes, false, 0, 0, 0, 0, 0);
+        homelist[_HomeOwner] = numHomes;
+        numHomes++;
+        return true;
     }
 
-    function onSale(uint _homeIndex, uint _price, uint _deposit, uint _defaultfee) public
+    function onSale(uint _homeIndex, uint _price, uint _deposit, uint _defaultfee) public returns(bool)
     {
         if(homes[_homeIndex].homeOwner != msg.sender)
         {
-            return;
+            return false;
         }
         homes[_homeIndex].isOnMarket = true;
         homes[_homeIndex].price = _price;
         homes[_homeIndex].deposit = _deposit;
         homes[_homeIndex].homeNet.defaultfee = _defaultfee;
+        return true;
     }
 
     function initialize(uint _homeIndex) internal {
