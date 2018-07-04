@@ -61,6 +61,8 @@ contract home is iotnet, Ownable {
         homes[_homeIndex].usageTime = 0;
     }
 
+
+
     function getHome(uint _homeIndex) public view returns (
         address _homeOwner,
         bool _isOnMarket,
@@ -87,6 +89,11 @@ contract home is iotnet, Ownable {
             _usageHour = now.sub(_checkinTime).getHour();
             _usageMinute = now.sub(_checkinTime).getMinute();
         }
+    }
+
+    function getHomelist(address _homeOwner) public constant returns(uint _homeIndex)
+    {
+        _homeIndex = homelist[_homeOwner];
     }
 
     function getIoTnet(uint _homeIndex) public constant returns
