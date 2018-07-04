@@ -110,8 +110,12 @@ export class ContractManager {
 
                 if (!this.compileSolidity()) return;
             }
+
+            console.log(typeof this.owner !== 'string');
+            console.log(!this.owner.startsWith('0x'));
     
-            this.owner = await getOwnerAccountByIndex(this.owner);
+            if (typeof this.owner !== 'string' || !this.owner.startsWith('0x')) 
+                this.owner = await getOwnerAccountByIndex(this.owner);
     
             const Contract = new web3.eth.Contract(JSON.parse(this.abi), this.owner);
             Contract.deploy({
