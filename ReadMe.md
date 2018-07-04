@@ -28,72 +28,72 @@ URL : http://localhost:1356
 
 ### 솔리디티 정의된 인터페이스 보기
 ``` shell
-http://localhost:3000/block-in/api/interface
+/block-in/api/interface?name=hdac
 ```
 
 ``` json
 {
 "methods": [
-"Balance",
-"0x0ef67887",
-"Balance()",
-"DeviceOn",
-"0x1a8358f9",
-"DeviceOn(uint256,address)",
-"GetHome",
-"0x24091990",
-"GetHome(uint256)",
-"DoPay",
-"0x29dc7355",
-"DoPay(address,uint256)",
-"GetIoTnet",
-"0x3062d131",
-"GetIoTnet(uint256)",
-"OnSale",
-"0x3de5a0d8",
-"OnSale(uint256,uint256)",
-"GetMinute",
-"0x427aaa8b",
-"GetMinute(uint256)",
-"Constuctor",
-"0x4a0bc640",
-"Constuctor()",
-"GiveAdmin",
-"0x5fa660e6",
-"GiveAdmin(uint256,address)",
-"AddDevice",
-"0x693cea2e",
-"AddDevice(uint256,address,string,string,uint256)",
-"GetDevice",
-"0x7f1c129a",
-"GetDevice(address)",
-"GetCustomer",
-"0x87d30278",
-"GetCustomer(address)",
-"RegistHome",
-"0xbd532723",
-"RegistHome(address)",
-"GetHour",
-"0xbfb80817",
-"GetHour(uint256)",
-"Initialize",
-"0xc43e48cf",
-"Initialize(uint256)",
-"Checkout",
-"0xc7283831",
-"Checkout(uint256,address)",
+"getDevice",
+"0x00d55318",
+"getDevice(address)",
+"addDevice",
+"0x0a342e8d",
+"addDevice(uint256,address,string,string,uint256)",
+"doPay",
+"0x0bfd588a",
+"doPay(address,uint256)",
+"onDevice",
+"0x2781ec46",
+"onDevice(uint256,address)",
+"getHome",
+"0x616d5b6b",
+"getHome(uint256)",
+"delegatePermission",
+"0x7ff30678",
+"delegatePermission(uint256,address)",
+"giveAdmin",
+"0xadfcb641",
+"giveAdmin(uint256,address)",
+"balance",
+"0xb69ef8a8",
+"balance()",
+"getCustomer",
+"0xcb949e51",
+"getCustomer(address)",
+"contractOwner",
+"0xce606ee0",
+"contractOwner()",
+"getIoTnet",
+"0xd88cbbf0",
+"getIoTnet(uint256)",
+"offDevice",
+"0xdc8ae488",
+"offDevice(uint256,address)",
+"constuctor",
+"0xdfe4858a",
+"constuctor()",
+"checkout",
+"0xe19c97d3",
+"checkout(uint256,address)",
 "numHomes",
 "0xea6564f7",
 "numHomes()",
-"Checkin",
-"0xecebf80c",
-"Checkin(uint256,address)",
-"DeviceOff",
-"0xf5f27b15",
-"DeviceOff(uint256,address)",
-"DelegatePermission",
-"0xf8df92d9",
-"DelegatePermission(uint256,address)"
+"transferOwnership",
+"0xf2fde38b",
+"transferOwnership(address)",
+"onSale",
+"0xf5379db8",
+"onSale(uint256,uint256,uint256,uint256)",
+"checkin",
+"0xf7aad18e",
+"checkin(uint256,address)",
+"refund",
+"0xfa89401a",
+"refund(address)",
+"registHome",
+"0xff77ebf9",
+"registHome(address)"
 ],
 "code": 200
 }
@@ -102,8 +102,8 @@ http://localhost:3000/block-in/api/interface
 ``` shell
 # HTTP Method: POST 
 
-http://localhost:3000/block-in/api/interface/call
-http://localhost:3000/block-in/api/interface/send
+/block-in/api/interface/call
+/block-in/api/interface/send
 ```
 
 - example request body
@@ -133,8 +133,8 @@ http://localhost:3000/block-in/api/interface/send
 
 
 ### example api
-```
-http://localhost:3000/block-in/api/contract/block-in?name=RSPBattle
+``` shell
+/block-in/api/contract/block-in?name=hdac
 ```
 
 - request query (GET method)

@@ -68,14 +68,11 @@ export class ContractManager {
         // console.log(input);
         let compiled = solc.compile({ sources: input }, 1, this.findImports);
 
-        console.log(compiled);
-
+        // console.log(compiled);
         // for (var contractName in compiled.contracts)
         //     console.log(contractName + ': ' + compiled.contracts[contractName].bytecode);
 
         compiled = !!this.name? compiled.contracts[`${this.filename}.sol:${this.name}`]: compiled.contracts;
-
-        console.log(compiled);
 
         if (!!!compiled){
             console.error(`-----\tFailed to Compile Solidity file (PATH : ${pathContract})\t-----`);
