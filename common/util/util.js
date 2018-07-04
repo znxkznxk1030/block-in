@@ -2,7 +2,7 @@ import Web3 from 'web3';
 
 let web3;
 
-export const URL_WEB3_PROVIDER = 'http://localhost:8545';
+export const URL_WEB3_PROVIDER = 'http://localhost:9545';
 
 export const web3Provider = function() {
     if (!!web3) {
