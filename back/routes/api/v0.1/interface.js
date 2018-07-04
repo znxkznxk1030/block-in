@@ -7,8 +7,6 @@ router.get('/', (req, res) => {
     const blockin = new ContractManager({name: req.query.name});
     const contractInstance = blockin.getContractInstance();
 
-    console.log(contractInstance.methods);
-
     if (!!contractInstance) {
         return res.status(200).json({
             'methods': Object.keys(contractInstance.methods),
@@ -69,7 +67,6 @@ router.post('/call', (req, res) => {
     const contractInstance = blockin.getContractInstance();
 
     if (!!contractInstance) {
-        console.log(contractInstance[`${method}`]);
         contractInstance.methods[`${method}`](...param)
         .call({
             from: from
