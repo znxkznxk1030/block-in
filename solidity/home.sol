@@ -27,10 +27,6 @@ contract home is iotnet, Ownable {
     uint public numHomes;
 
     function registHome(address _HomeOwner) public returns(bool) {
-        if(msg.sender != contractOwner)
-        {
-            return false;
-        }
         IoTnet memory newIoTnet = IoTnet(0,new address[](0), new address[](0), 0, 0, 0);
         homes[numHomes] = Home(_HomeOwner, newIoTnet, numHomes, false, 0, 0, 0, 0, 0);
         homelist[_HomeOwner] = numHomes;
@@ -40,10 +36,6 @@ contract home is iotnet, Ownable {
 
     function onSale(uint _homeIndex, uint _price, uint _deposit, uint _defaultfee) public returns(bool)
     {
-        if(homes[_homeIndex].homeOwner != msg.sender)
-        {
-            return false;
-        }
         homes[_homeIndex].isOnMarket = true;
         homes[_homeIndex].price = _price;
         homes[_homeIndex].deposit = _deposit;
