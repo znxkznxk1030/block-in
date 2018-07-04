@@ -8,9 +8,19 @@ import "./safemath.sol";
 contract Permission is home, customer, device {
     using SafeMath for uint;
     function () payable public {
-        require(bytes(customers[msg.sender].name).length != 0);
-        customers[msg.sender].deposit = msg.value;
-        balance = balance.add(msg.value);
+        if(msg.sender == contractOwner)
+        {
+            balance = balance.add(msg.value);
+        }
+        else
+        {
+            if(bytes(customers[msg.sender].name).length == 0)
+            {
+                return;
+            }
+            customers[msg.sender].deposit = msg.value;
+            balance = balance.add(msg.value);
+        }
     }
 
     function giveAdmin(uint _homeIndex, address _to) public returns(bool){
