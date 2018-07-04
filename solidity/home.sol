@@ -54,8 +54,6 @@ contract home is iotnet, Ownable {
         homes[_homeIndex].usageTime = 0;
     }
 
-
-
     function getHome(uint _homeIndex) public view returns (
         address _homeOwner,
         bool _isOnMarket,

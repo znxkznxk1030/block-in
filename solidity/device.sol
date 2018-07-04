@@ -92,8 +92,6 @@ contract device is home {
         }
     }
 
-
-
     function initializeDevices(uint _homeIndex) internal {
         uint counter = 0;
         for(uint i = 0; i < homes[_homeIndex].homeNet.numDevice; i++)

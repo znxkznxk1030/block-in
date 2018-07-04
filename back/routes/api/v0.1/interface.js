@@ -43,6 +43,7 @@ router.post('/send', (req, res) => {
             });
         })
         .catch((error) => {
+            console.log(error);
             return res.status(500).json({
                 code: 500,
                 msg: error
