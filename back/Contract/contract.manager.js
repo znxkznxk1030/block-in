@@ -110,9 +110,6 @@ export class ContractManager {
 
                 if (!this.compileSolidity()) return;
             }
-
-            console.log(typeof this.owner !== 'string');
-            console.log(!this.owner.startsWith('0x'));
     
             if (typeof this.owner !== 'string' || !this.owner.startsWith('0x')) 
                 this.owner = await getOwnerAccountByIndex(this.owner);
