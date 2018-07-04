@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAccounts, createAccoun, getBalance} from '../../../Account/account';
+import {getAccounts, createAccount, getBalance} from '../../../Account/account';
 
 const router = express.Router();
 
