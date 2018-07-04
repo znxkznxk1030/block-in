@@ -9,8 +9,13 @@ let option = {
     gas: 4712388,
     price: 100000000000,
     filename: 'hdac',
-    name: 'hdac'
+    name: 'hdac',
+    address: '',
+    abi: '',
+    isDeployed: false
 };
+
+const isDeployed = false;
 
 (async function () {
     if (!!!web3) {
@@ -25,7 +30,7 @@ let option = {
     });
 })();
 
-router.get('/block-in', (req, res) => {
+router.get('/', (req, res) => {
     const blockin = new ContractManager({name: req.query.name});
     const metadata = blockin.getContractMetadata();
 
