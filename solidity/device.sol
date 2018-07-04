@@ -40,10 +40,10 @@ contract device is home {
         _homeIndex = devices[_deviceAddress].homeIndex;
     }
 
-    function addDevice(uint _homeIndex, address _deviceAddress, string _name, string _type, uint _fee) public {
+    function addDevice(uint _homeIndex, address _deviceAddress, string _name, string _type, uint _fee) public returns (bool) {
         if(homes[_homeIndex].homeOwner != msg.sender && homes[_homeIndex].homeNet.admin != msg.sender)
         {
-            return;
+            return false;
         }
         homes[_homeIndex].homeNet.permittedDevice.push(_deviceAddress);
         if(msg.sender == homes[_homeIndex].homeOwner)
@@ -55,9 +55,11 @@ contract device is home {
             devices[_deviceAddress] = Device(_deviceAddress, false, _name, _type, 0, 0, 0, homes[_homeIndex].homeNet.defaultfee, _homeIndex,false);
         }
         homes[_homeIndex].homeNet.numDevice++;
+        return true;
     }
 
-    function onDevice(uint _homeIndex, address _deviceAddress) public{
+    function onDevice(uint _homeIndex, address _deviceAddress) public returns(bool) {
+        bool result = false;
         for(uint i; i < homes[_homeIndex].homeNet.numDevice; i++)
         {
             if(homes[_homeIndex].homeNet.permittedDevice[i] == _deviceAddress)
@@ -66,15 +68,18 @@ contract device is home {
                 {
                     if(homes[_homeIndex].homeNet.permittedUser[j] == msg.sender && devices[_deviceAddress].state == false)
                     {
+                        result = true;
                         devices[_deviceAddress].state = true;
                         devices[_deviceAddress].startTime = now;
                     }
                 }
             }
         }
+        return result;
     }
 
-    function offDevice(uint _homeIndex, address _deviceAddress) public{
+    function offDevice(uint _homeIndex, address _deviceAddress) public returns(bool){
+        bool result = false;
         for(uint i; i < homes[_homeIndex].homeNet.numDevice; i++)
         {
             if(homes[_homeIndex].homeNet.permittedDevice[i] == _deviceAddress)
@@ -83,6 +88,7 @@ contract device is home {
                 {
                     if(homes[_homeIndex].homeNet.permittedUser[j] == msg.sender && devices[_deviceAddress].state == true)
                     {
+                        result = true;
                         devices[_deviceAddress].state = false;
                         devices[_deviceAddress].endTime = now;
                         devices[_deviceAddress].usageTime = devices[_deviceAddress].usageTime.add(devices[_deviceAddress].endTime.sub(devices[_deviceAddress].startTime));
@@ -90,11 +96,12 @@ contract device is home {
                 }
             }
         }
+        return result;
     }
 
 
 
-    function initializeDevices(uint _homeIndex) internal {
+    function initializeDevices(uint _homeIndex) internal returns(bool){
         uint counter = 0;
         for(uint i = 0; i < homes[_homeIndex].homeNet.numDevice; i++)
         {
@@ -105,6 +112,7 @@ contract device is home {
             }
         }
         homes[_homeIndex].homeNet.numDevice = homes[_homeIndex].homeNet.numDevice.sub(counter);
+        return true;
     }
 
 }

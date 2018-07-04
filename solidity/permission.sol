@@ -8,49 +8,53 @@ import "./safemath.sol";
 contract Permission is home, customer, device {
     using SafeMath for uint;
     function () payable public {
-        customers[msg.sender] = Customer(msg.sender, msg.value, 0,false);
+        require(bytes(customers[msg.sender].name).length != 0);
+        customers[msg.sender].deposit = msg.value;
         balance = balance.add(msg.value);
     }
 
-    function giveAdmin(uint _homeIndex, address _to) public {
+    function giveAdmin(uint _homeIndex, address _to) public returns(bool){
         if(homes[_homeIndex].homeOwner != msg.sender)
         {
-            return;
+            return false;
         }
         homes[_homeIndex].homeNet.admin = _to;
         homes[_homeIndex].homeNet.permittedUser.push(_to);
         homes[_homeIndex].homeNet.numPermittedUser++;
+        return true;
     }
 
-    function delegatePermission(uint _homeIndex, address _to) public {
+    function delegatePermission(uint _homeIndex, address _to) public returns(bool){
         if(homes[_homeIndex].homeNet.admin != msg.sender && homes[_homeIndex].homeOwner != msg.sender)
         {
-            return;
+            return false;
         }
         homes[_homeIndex].homeNet.permittedUser.push(_to);
         homes[_homeIndex].homeNet.numPermittedUser++;
+        return true;
     }
 
-    function checkin(uint _homeIndex, address _to) public {
+    function checkin(uint _homeIndex, address _to) public returns(bool) {
         require(homes[_homeIndex].homeOwner == msg.sender);
         if(homes[_homeIndex].isOnMarket == false)
         {
-            return;
+            return false;
         }
         if(customers[_to].deposit < homes[_homeIndex].deposit.mul(1 ether))
         {
-            return;
+            return false;
         }
         delegatePermission(_homeIndex, _to);
         homes[_homeIndex].isOnMarket = false;
         homes[_homeIndex].checkinTime = now;
         customers[_to].isCheckedin = true;
+        return true;
     }
 
-    function checkout(uint _homeIndex, address _customerAddress) payable public {
+    function checkout(uint _homeIndex, address _customerAddress) payable public returns(bool){
         if(homes[_homeIndex].homeOwner != msg.sender)
         {
-            return;
+            return false;
         }
         homes[_homeIndex].checkoutTime = now;
         homes[_homeIndex].usageTime = homes[_homeIndex].checkoutTime.sub(homes[_homeIndex].checkinTime);
@@ -65,6 +69,7 @@ contract Permission is home, customer, device {
         initialize(_homeIndex);
         initializeDevices(_homeIndex);
         customers[_customerAddress].isCheckedin = false;
+        return true;
     }
 
     function doPay(address _customerAddress, uint _HomeIndex) payable public {
