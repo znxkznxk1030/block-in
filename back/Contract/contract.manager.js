@@ -125,6 +125,7 @@ export class ContractManager {
                 reject(error);
             })
             .then((contractInstance) => {
+                console.log(`-----\t Success to deploy, contractInstance : ${contractInstance} \t-----`);
                 this.address = contractInstance.options.address;
                 instances[this.name] = this;
                 this.contractInstance = contractInstance;
@@ -137,6 +138,10 @@ export class ContractManager {
     }
 
     getContractInstance () {
+        console.log(`-----\t call contract instancd \t-----`);
+        console.log(`-----\t ${this.contractInstance} \t-----`);
+        console.log(`-----\t ${this.contractInstance.options} \t-----`);
+        console.log(`-----\t ${this.contractInstance.options.address} \t-----`);
         return this.contractInstance;
     }
 
